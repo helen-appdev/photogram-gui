@@ -6,15 +6,29 @@ class UsersController < ApplicationController
     render({:template => "/user_views/index.html.erb"})
   end
   
+
+  def update
+  a = params.fetch("username")
+  puts a
+  b = User.where({:username => a})
+  c = b.at(0)
+  
+  d = params.fetch("inputusername")
+  
+  c.username = d
+  c.save
+  redirect_to("/users/#{c.username}")
+  end
+  
   def add_user
     a = params.fetch("input_username")
     b = User.new
     b.username = a
     b.save
-    render({:template =>"/user_views/detail.html.erb"})
+    redirect_to("/users/#{b.username}")
   end
 
-  #31:01 in video
+
   def detail
     a = params.fetch("username")
     b = User.where({:username => a}) 

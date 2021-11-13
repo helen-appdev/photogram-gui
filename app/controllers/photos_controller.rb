@@ -23,7 +23,7 @@ class PhotosController < ApplicationController
   end
 
   def insert
-    #Parameters: {"inputurl"=>"http://3.bp.blogspot.com/-UXhI6bPgGQ4/UpFrgHjhriI/AAAAAAAAWS8/Do-VZZwv7HM/s1600/bernese+mountain+dog+.jpg", "inputcaption"=>"dsfsa", "inputowner"=>"117"}
+   
     input_image = params.fetch("inputurl")
     input_caption = params.fetch("inputcaption")
     input_owner_id = params.fetch("inputowner")
@@ -51,10 +51,22 @@ class PhotosController < ApplicationController
     photo.image = image
     photo.caption = caption
     photo.save
-    # render({:template => "photo_views/test.html.erb"})
-
     redirect_to("/photos/#{photoid}")
 
+  end
+
+  def comment
+  
+    photo_id = params.fetch("input_photo_id")
+    author_id = params.fetch("input_author_id") 
+    comment = params.fetch("input_body")
+    a = Comment.new
+    a.photo_id = photo_id
+    a.author_id = author_id
+    a.body = comment
+    a.save
+    # render({:template => "/photo_views/test.html.erb"})
+    redirect_to("/photos/#{a.photo_id}")
   end
 
 end
